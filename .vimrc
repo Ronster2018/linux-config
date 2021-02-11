@@ -18,6 +18,8 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 "set colorcolumn=80
+set scrolloff=8
+set signcolumn=yes
 
 " To Source this current file
 " : source %

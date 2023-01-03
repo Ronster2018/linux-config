@@ -28,7 +28,7 @@ function install_vim(){
 	VIMRC="$HOME/.vimrc"
 	if [[ ! -e $VIMRC || .vimrc -nt $VIMRC || -s $VIMRC ]]; then # if .vimrc does not exist, source is newer, or existing is of size 0, add it.
 		echo "Adding vimrc file to $HOME/.vimrc"
-		ln -snf .vimrc $VIMRC
+		ln -snf $(pwd)/confs/.vimrc $VIMRC
 		if [[ $? -ne 0 ]]; then
 			echo "Vim RC successfully created"
 		else

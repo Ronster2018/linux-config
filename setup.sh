@@ -4,13 +4,12 @@
 # After a fresh (or not so fresh) install of linux, this script will allow me to install and maintain 
 # certain configurations and themes that have been installed over and over
 
-
-
-
-
-
-
 # Program Installations
+
+function install_utils(){
+    sudo apt-get install curl jq
+}
+
 function install_git(){
 	command -v git 2>&1 >/dev/null 	# Taking output and sending it to dev/null (no output on screen)
 	GIT_IS_PRESENT=$? 		# Check the error status. 0=OK
@@ -29,7 +28,7 @@ function install_vim(){
 	VIMRC="$HOME/.vimrc"
 	if [[ ! -e $VIMRC || .vimrc -nt $VIMRC || -s $VIMRC ]]; then # if .vimrc does not exist, source is newer, or existing is of size 0, add it.
 		echo "Adding vimrc file to $HOME/.vimrc"
-		cp .vimrc $VIMRC
+		ln -snf .vimrc $VIMRC
 		if [[ $? -ne 0 ]]; then
 			echo "Vim RC successfully created"
 		else
@@ -52,11 +51,20 @@ function install_conky(){
     CONKY_IS_PRESENT=$?
 
     if [[ $CONKY_IS_PRESENT -ne 0 ]]; then
-        echo "Conky is not present"
+        echo "Conky is not present... Installing"
+	sudo apt-get install conky-all -y
     else
         echo "Conky is present"
     fi
+    #make symlinksi (Target -> Link Name)
+    echo "Creating Synlinks"
+    ln -snf $(pwd)/conky $HOME/.config/conky 
+    # Add to crontab
+    echo "Updating Users crontab"
+    echo -e "#Launch Conky on start up\n@reboot /home/black/Projects/linux-config/conky/Betelgeuse/launch.sh" | crontab
+    crontab -l
 }
+
 
 
 install_git

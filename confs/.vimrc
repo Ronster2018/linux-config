@@ -21,5 +21,13 @@ set incsearch
 set scrolloff=8
 set signcolumn=yes
 
+" Set terminal size
+set termwinsize=12x0
+
+" Always split below
+set splitbelow
+
+" Enable mouse drag on window splits
+set mouse=a
 " To Source this current file
 " : source %
